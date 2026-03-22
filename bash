@@ -1,19 +1,11 @@
 #!/bin/bash
 
-CPU=$(top -bn1 | grep "CPU" | awk '{print $2 + $4})
-
-Memory=$(free -m | awk 'NR==2{printf "%.2f", $3*100/$2 }')
-
-Disk Space=$(df -h / | awk 'NR==2 {
+Ip_address=$(hostname -i)
+echo "IP ADDRESS: $Ip_address"
 
 
-Echo "System Details"
+echo $Hostname
+File_Sys=$(df -h)
 
-Echo "CPU: $CPU%"
-
-Echo "Memory Used: $Memory%"
-
-Echo "Memory Free: $Memfree"
-
-Echo: "Disk Space: $Disk Space"
+echo "$File_Sys"
 
