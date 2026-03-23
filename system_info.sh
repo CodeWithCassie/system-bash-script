@@ -1,4 +1,5 @@
 #!/bin/bash
+chmod u+x system_info.sh
 
 LOG_FILE="/var/log/syslog"
 
