@@ -3,32 +3,42 @@
 LOG_FILE="/var/log/syslog"
 
 Hostname=$(hostname)
-echo "Hostname:$Hostname"
+echo "HOSTNAME:$Hostname"
 
 Operating_system=$(uname -o)
-echo "Operating System: $Operating_system"
+echo "OPERATING SYSTEM: $Operating_system"
 
 System_uptime=$(uptime -p)
-echo "System Uptime:$System_uptime"
-
+echo "SYSTEM UPTIME:$System_uptime"
 
 Kernel_version=$(uname -r -s -v)
-echo "Kernel_version: $Kernel_version"
+echo "KERNEL VERSION: $Kernel_version"
 
 Memory_free=$(free -h)
-echo "Memory: $Memory_free"
+echo "MEMORY: $Memory_free"
 
 Ip_address=$(hostname -i)
 echo "IP ADDRESS: $Ip_address"
 
 File_sys=$(df -h)
 echo "$File_sys"
-echo CPU:
+
+CPU_usage=$(top -bn1 | grep load | awk '{printf "%.2f%%\t\t\n", $(NF-2)}')
+echo "CPU USAGE: $CPU_usage"
+
 CPU_cores=$(nproc)
-echo "Cores: $CPU_cores" 
+echo "CORES: $CPU_cores" 
 
 CPU_load=$(uptime | awk -F'load average:' '{print $2}')
-echo "Load:$CPU_load"
+echo "LOAD:$CPU_load"
+
+if [[ ! -f "$LOG_FILE" ]]; then
+    echo "Error: Log file not found at $LOG_FILE"
+    exit 1
+fi
+echo "Searching for the last five lines containing 'error' (case-insensitive) in $LOG_FILE..."
+grep -i "error" "$LOG_FILE" | tail -n 5
+
 
 
 
